@@ -1,0 +1,65 @@
+step 1 : npm install @reduxjs/toolkit react-redux
+step 2 : create "app " folder in "src" folder add "store.js" file in that.
+
+import { configureStore } from '@reduxjs/toolkit';
+
+export const store = configureStore({
+	reducer: {
+	}
+});
+step: 3 importing in index.js
+	import { store } from 'store.js'; file
+	import { Provider } from 'react-redux';
+step: 4
+and kept app component inside provider pass prop as store to provider component
+<Provider store={store}>
+     <App />
+</Provider>
+
+step: 5 
+basic example for counter
+Example: Normally create one folder features inside src folder and named as counter.js
+
+Answer;
+import {createSlice} from '@redux/toolkit'
+
+export const counterInitialState = {
+	count: 0,
+}
+
+export const counterSlice = createSlice({
+	name: 'Counter',
+	initialState: counterInitalState,
+	reducer: {
+	      increment: (state) => {
+		state.count += 1
+	      },
+	      decrement(state) => {
+		state.count -= 1
+	      },
+	}
+});
+
+export const { increment, decrement} = counterSlice.actions;
+export default counterSlice.reducer;
+
+step: 6 
+import { configureStore } from '@reduxjs/toolkit';
+import counterSlice from './features/counter.js'
+
+export const store = configureStore({
+	reducer: {
+	  counter: counterSlice,
+	}
+});
+
+step: 7 
+In Html we need to import like this
+import { useSelector, useDispatch } from 'react-redux';
+import { increment, decrement } from './features/counter.js'
+
+const counterIntialValue = useSelector((state) => state.counter.count);
+const dispatch = useDispatch();
+
+<button onClick="() => dispatch(increment())">+</button>
+<button onClick="() => dispatch(decrement())">-</button>
